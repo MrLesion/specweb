@@ -1,0 +1,8 @@
+.agents/
+.cline/
+.clinerules/
+.gemeni/
+.github/
+
+openspec/
+!openspec/config.yaml
