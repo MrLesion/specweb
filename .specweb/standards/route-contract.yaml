@@ -1,0 +1,69 @@
+# SpecWeb route contract — the machine-readable form of architecture/routing.md.
+# Read by tools/validate-routes.mjs. `routes` is the reviewable route table; the feature route modules
+# are authoritative for behaviour, and the validator enforces agreement in both directions
+# (RTE-001, RTE-002). Do not edit to make a feature pass (Article X).
+apiVersion: specweb.dev/v1
+kind: RouteContract
+metadata:
+  name: route-contract
+  owner: platform
+  updated: 2026-09-23
+
+routerModule: src/routes/router.js
+registryModule: src/routes/registry.js
+guardsModule: src/routes/guards.js
+routeFileSuffix: .route.js
+requiredRouteIds: [not-found]
+requireLazy: true
+requireSpecReference: true
+titleRequired: true
+pathPrefix: '/'
+
+# Declared routes. Each entry must match the route object exported by its module:
+#   id, path, title, element, guard, load  (see skills/create-route/templates/route.js)
+#
+# Example:
+#   - id: task-board
+#     path: /boards/:boardId
+#     module: src/features/task-board/task-board.route.js
+#     element: app-task-board
+#     title: Task board
+#     guard: requireSession
+#     lazy: true
+#     spec: task-board
+routes: []
+
+rules:
+  RTE-001:
+    enabled: true
+    severity: error
+  RTE-002:
+    enabled: true
+    severity: error
+  RTE-003:
+    enabled: true
+    severity: error
+  RTE-004:
+    enabled: true
+    severity: warning
+  RTE-005:
+    enabled: true
+    severity: error
+  RTE-006:
+    enabled: true
+    severity: error
+  RTE-007:
+    enabled: true
+    severity: error
+  RTE-008:
+    enabled: true
+    severity: error
+  RTE-009:
+    enabled: true
+    severity: error
+  RTE-010:
+    enabled: true
+    severity: error
+  RTE-011:
+    enabled: true
+    severity: error

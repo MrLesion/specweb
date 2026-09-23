@@ -1,0 +1,131 @@
+# SpecWeb dependency policy — the machine-readable form of architecture/application.md (Article III,
+# Article IX). Read by tools/validate-architecture.mjs. Do not edit to make a feature pass (Article X).
+apiVersion: specweb.dev/v1
+kind: DependencyPolicy
+metadata:
+  name: dependency-policy
+  owner: platform
+  updated: 2026-09-23
+
+# A file's layer is derived from its path, longest pattern first. Order here is for reporting only;
+# the direction of allowed imports is in `allowed`.
+layers:
+  - name: app
+    patterns: [src/main.js, src/app]
+    purpose: Bootstrap, shell, configuration, error handling
+  - name: routes
+    patterns: [src/routes]
+    purpose: Route table, matching, guards, navigation
+  - name: features
+    patterns: [src/features]
+    purpose: Feature UI, feature stores, feature clients
+  - name: state
+    patterns: [src/state]
+    purpose: Cross-feature stores, reducers, selectors
+  - name: services
+    patterns: [src/services]
+    purpose: HTTP transport, caches, platform adapters
+  - name: components
+    patterns: [src/components]
+    purpose: Shared presentational components
+  - name: utils
+    patterns: [src/utils, src/types.js, src/constants.js]
+    purpose: Pure helpers, typedefs, constants
+  - name: styles
+    patterns: [src/styles]
+    purpose: Tokens and global CSS
+  - name: tests
+    patterns: [tests]
+    purpose: Cross-cutting test suites (may import anything)
+
+# Downward-only dependencies. A layer may import itself and anything listed for it.
+allowed:
+  app: [routes, features, state, services, components, utils, styles]
+  routes: [features, state, services, components, utils, styles]
+  features: [state, services, components, utils, styles]
+  state: [services, utils, styles]
+  services: [utils]
+  components: [utils, styles]
+  utils: [utils]
+  styles: []
+  tests: [app, routes, features, state, services, components, utils, styles]
+
+# Cross-feature imports must pass through the feature's public entry point (ARCH-003).
+featureIsolation:
+  enabled: true
+  entryFile: index.js
+  severity: error
+
+# Shared components stay presentational: they may not reach state, services, routes or features
+# (ARCH-004). Feature-local components under src/features/*/components are exempt.
+sharedComponents:
+  patterns: [src/components]
+  forbiddenLayers: [state, services, features, routes, app]
+
+# Optional import aliases. Enabling one here requires the same mapping in the browser's import map.
+# Never enable an alias that resolves in Node but not in the browser.
+aliases: {}
+
+# Runtime dependencies are forbidden by default (Article IX). An addition requires an accepted ADR in
+# `decisionDirectory` plus an entry here.
+externals:
+  allow: []
+  devAllow: [typescript, prettier, eslint, @web/test-runner, @web/test-runner-playwright, @playwright/test, playwright, axe-core]
+  requireDecisionRecord: true
+  decisionDirectory: .specweb/decisions
+
+# Paths the application may never import from.
+forbiddenPaths:
+  - node_modules
+  - .specweb
+  - specs
+
+# Extensions resolved for local imports. A relative import must carry an explicit .js extension
+# (ARCH-008) — the browser resolves URLs, not module names.
+resolve:
+  extensions: [.js]
+  indexFiles: [index.js]
+
+# Rule switches. `enabled: false` requires the id of the ADR that retired the rule in a comment above
+# it (constitution.md, Versioning).
+rules:
+  ARCH-001:
+    enabled: true
+    severity: error
+  ARCH-002:
+    enabled: true
+    severity: error
+  ARCH-003:
+    enabled: true
+    severity: error
+  ARCH-004:
+    enabled: true
+    severity: error
+  ARCH-005:
+    enabled: true
+    severity: error
+  ARCH-006:
+    enabled: false
+    severity: warning
+    note: Reports forbidden-path imports as warnings while the host app adopts the platform.
+  ARCH-007:
+    enabled: true
+    severity: warning
+  ARCH-008:
+    enabled: true
+    severity: error
+  ARCH-009:
+    enabled: true
+    severity: error
+  ARCH-010:
+    enabled: true
+    severity: warning
+  ARCH-011:
+    enabled: true
+    severity: error
+  ARCH-012:
+    enabled: true
+    severity: error
+  ARCH-013:
+    enabled: true
+    severity: error

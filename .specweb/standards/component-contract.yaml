@@ -1,0 +1,108 @@
+# SpecWeb component contract — the machine-readable form of architecture/components.md.
+# Read by tools/validate-components.mjs. Do not edit to make a feature pass (Article X).
+apiVersion: specweb.dev/v1
+kind: ComponentContract
+metadata:
+  name: component-contract
+  owner: platform
+  updated: 2026-09-23
+
+elementPrefix: app-
+fileSuffix: .component.js
+classSuffix: Element
+testSuffix: .component.test.js
+
+# Element modules are scanned: shared components, route view elements and form controllers all define
+# a custom element, so the same contract applies to all three. The map is suffix -> allowed parents.
+elementSuffixes:
+  .component.js: [src/components, src/features]
+  .element.js: [src/features]
+  .form.js: [src/features]
+
+# Only shared components require a sibling *.component.test.js; views and forms are covered by
+# integration and unit tests (architecture/testing.md).
+requireTest: true
+requireTestSuffixes: [.component.js]
+
+# Components live in the shared component layer or inside a feature's components folder.
+allowedDirectories: [src/components, src/features]
+requireComponentsSubdirectory: true
+shadowRootMode: open
+
+# Events dispatched by components must be namespaced, documented, and known.
+eventNamespace: app:
+eventTypes: [app:task-complete, app:form-submitted, app:form-invalid, app:field-changed, app:field-blurred]
+requireKnownEventType: true
+
+# An element that listens for clicks without a keyboard path and accessible name is not operable
+# (Article V). Elements that delegate to a real control are exempt.
+pointerSemantics:
+  events: [click]
+  exemptTags: [button, a, input, select, textarea, label, details, summary]
+  requireRoleOrKeyboard: true
+
+# Rendered native form controls must have a wired label (Article V).
+labelWiring:
+  controls: [input, select, textarea]
+  acceptForId: true
+  acceptAriaLabel: true
+  acceptWrappingLabel: true
+
+rules:
+  CMP-001:
+    enabled: true
+    severity: error
+  CMP-002:
+    enabled: true
+    severity: error
+  CMP-003:
+    enabled: true
+    severity: error
+  CMP-004:
+    enabled: true
+    severity: error
+  CMP-005:
+    enabled: true
+    severity: error
+  CMP-006:
+    enabled: true
+    severity: error
+  CMP-007:
+    enabled: true
+    severity: error
+  CMP-008:
+    enabled: true
+    severity: warning
+  CMP-009:
+    enabled: true
+    severity: error
+  CMP-010:
+    enabled: true
+    severity: error
+  CMP-011:
+    enabled: true
+    severity: error
+  CMP-012:
+    enabled: true
+    severity: error
+  CMP-013:
+    enabled: true
+    severity: error
+  CMP-014:
+    enabled: true
+    severity: error
+  CMP-015:
+    enabled: true
+    severity: error
+  CMP-016:
+    enabled: true
+    severity: error
+  CMP-017:
+    enabled: true
+    severity: error
+  CMP-018:
+    enabled: true
+    severity: error
+  CMP-019:
+    enabled: true
+    severity: error

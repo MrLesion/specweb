@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "scripts": {
+    "check": "npm run lint && npm run test && npm run specweb:validate",
+    "specweb:validate": "node .specweb/tools/validate-architecture.mjs",
+    "specweb:components": "node .specweb/tools/validate-components.mjs",
+    "specweb:routes": "node .specweb/tools/validate-routes.mjs",
+    "specweb:specs": "node .specweb/tools/validate-spec-coverage.mjs"
+  }
+}

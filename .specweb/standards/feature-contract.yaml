@@ -1,0 +1,95 @@
+# SpecWeb feature contract — what "a feature" must consist of, and what its artifacts must contain.
+# Read by tools/validate-spec-coverage.mjs. Do not edit to make a feature pass (Article X).
+apiVersion: specweb.dev/v1
+kind: FeatureContract
+metadata:
+  name: feature-contract
+  owner: platform
+  updated: 2026-09-23
+
+specsDirectory: specs
+sourceDirectory: src/features
+featureIdPattern: "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+
+# Relative to specs/<feature-id>/ — the four gate artifacts (agents/workflow.md).
+requiredArtifacts: [spec.md, plan.md, tasks.md, verification.md]
+
+# Headings (matched case-insensitively) required in spec.md. SPC-005.
+specSections:
+  - Problem
+  - Requirements
+  - Acceptance criteria
+  - States and errors
+  - Accessibility
+  - Security and privacy
+  - Out of scope
+
+# Headings required in plan.md. SPC-005.
+planSections:
+  - Approach
+  - Files
+  - Data flow
+  - Failure modes
+  - Test plan
+  - Risks and unknowns
+
+# Requirement and acceptance-criteria identifiers. SPC-006.
+requirements:
+  pattern: "^\\s*\\.?-?\\s*\\*{0,2}R-(\\d+)\\b"
+  criteriaPattern: "AC-(\\d+)\\.(\\d+)"
+  requireAcceptanceCriteria: true
+  minimumCriteriaCoverage: 1.0
+
+# Task list rules. SPC-009.
+tasks:
+  requireWhenImplemented: true
+  uncheckedPattern: "^\\s*-\\s\\[ \\]"
+  checkedPattern: "^\\s*-\\s*\\[x\\]"
+
+# Verification evidence. SPC-004, SPC-008.
+verification:
+  statuses: [PASS, "PASS WITH ISSUES", FAIL]
+  requireCommandEvidence: true
+  evidencePattern: "^(node|npx|npm|pnpm|yarn|deno)\\s"
+  minimumEvidenceCommands: 1
+
+# Every feature folder must correspond to a spec and vice versa. SPC-007.
+coverage:
+  requireSpecForSource: true
+  requireSourceForSpec: true
+  ignoreSourceDirectories: []
+
+rules:
+  SPC-001:
+    enabled: true
+    severity: error
+  SPC-002:
+    enabled: true
+    severity: error
+  SPC-003:
+    enabled: true
+    severity: error
+  SPC-004:
+    enabled: true
+    severity: error
+  SPC-005:
+    enabled: true
+    severity: error
+  SPC-006:
+    enabled: true
+    severity: error
+  SPC-007:
+    enabled: true
+    severity: error
+  SPC-008:
+    enabled: true
+    severity: error
+  SPC-009:
+    enabled: true
+    severity: warning
+  SPC-010:
+    enabled: true
+    severity: error
+  SPC-011:
+    enabled: true
+    severity: warning

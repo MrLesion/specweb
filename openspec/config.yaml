@@ -1,0 +1,50 @@
+schema: spec-driven
+
+context: |
+  This project uses the SpecWeb architecture.
+
+  Before generating artifacts:
+  - Read .specweb/constitution.md
+  - Read .specweb/agents/workflow.md
+  - Read relevant files under .specweb/architecture/
+  - Apply relevant skills from .specweb/skills/
+
+  Runtime:
+  - Vanilla JavaScript
+  - Native ES modules
+  - Native web components
+  - Server-rendered HTML with progressive enhancement
+  - No frontend framework
+  - No runtime dependency without an accepted ADR
+
+rules:
+  proposal:
+    - Identify the affected business capability.
+    - State whether the change affects permanent architecture.
+
+  specs:
+    - Describe observable behaviour rather than implementation.
+    - Include loading, empty, success and failure scenarios where applicable.
+    - Include accessibility and no-JavaScript behaviour where applicable.
+
+  design:
+    - Reference the applicable SpecWeb architecture documents.
+    - Identify feature ownership and public contracts.
+    - Document component, event, route, state and API changes.
+    - Explain every deviation from the SpecWeb constitution.
+
+  tasks:
+    - Map implementation tasks to specification scenarios.
+    - Include automated tests.
+    - Include SpecWeb architecture validation.
+
+operations:
+  apply:
+    guidance:
+      - Use the applicable skills under .specweb/skills/.
+      - Preserve server-rendered semantic HTML.
+      - Run focused tests and SpecWeb validators.
+
+  archive:
+    guidance:
+      - Confirm that permanent decisions have been recorded under .specweb/decisions/.
