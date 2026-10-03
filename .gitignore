@@ -3,6 +3,7 @@
 .clinerules/
 .gemeni/
 .github/
+.vscode/
 
 openspec/
 !openspec/config.yaml
