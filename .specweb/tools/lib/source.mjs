@@ -223,7 +223,12 @@ export function isFeatureEntry(relativePath) {
  * @returns {SpecifierClass}
  */
 export function classifySpecifier(specifier, aliases = {}) {
-  if (specifier.startsWith('.') && (specifier === '.' || specifier === '..' || specifier[1] === '/')) {
+  if (
+    specifier === '.' ||
+    specifier === '..' ||
+    specifier.startsWith('./') ||
+    specifier.startsWith('../')
+  ) {
     return { kind: 'relative', value: specifier };
   }
   if (specifier.startsWith('/')) return { kind: 'root-relative', value: specifier.slice(1) };

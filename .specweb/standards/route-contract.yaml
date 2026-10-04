@@ -7,7 +7,7 @@ kind: RouteContract
 metadata:
   name: route-contract
   owner: platform
-  updated: 2026-09-23
+  updated: 2026-10-04
 
 routerModule: src/routes/router.js
 registryModule: src/routes/registry.js
@@ -31,7 +31,47 @@ pathPrefix: '/'
 #     guard: requireSession
 #     lazy: true
 #     spec: task-board
-routes: []
+routes:
+  - id: gateway
+    path: /
+    module: src/features/site-gateway/gateway.route.js
+    element: app-gateway
+    title: Welcome
+    guard: null
+    lazy: true
+    spec: site-gateway
+  - id: music
+    path: /music
+    module: src/features/site-gateway/music.route.js
+    element: app-music-view
+    title: Music
+    guard: null
+    lazy: true
+    spec: site-gateway
+  - id: games
+    path: /games
+    module: src/features/site-gateway/games.route.js
+    element: app-games-view
+    title: Games
+    guard: null
+    lazy: true
+    spec: site-gateway
+  - id: projects
+    path: /projects
+    module: src/features/site-gateway/projects.route.js
+    element: app-projects-view
+    title: Projects
+    guard: null
+    lazy: true
+    spec: site-gateway
+  - id: not-found
+    path: '*'
+    module: src/features/site-gateway/not-found.route.js
+    element: app-not-found
+    title: Page not found
+    guard: null
+    lazy: true
+    spec: site-gateway
 
 rules:
   RTE-001:

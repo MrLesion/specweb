@@ -143,8 +143,8 @@ export async function readTextIfExists(absolutePath) {
 
 /**
  * @typedef {object} FileIndex
- * @property {Set<string>} files POSIX paths relative to the index root
- * @property {Set<string>} dirs POSIX directory paths relative to the index root
+ * @property {Set<string>} files POSIX paths relative to the repository root
+ * @property {Set<string>} dirs POSIX directory paths relative to the repository root
  */
 
 /**
@@ -164,10 +164,12 @@ export async function buildIndex(rootAbs, roots, options = {}) {
     if (!(await isDirectory(absoluteRoot))) continue;
     const walked = await walkFiles(absoluteRoot, options);
     for (const relative of walked) {
-      files.add(relative);
+      files.add(toPosix(path.join(root, relative)));
       scanned += 1;
     }
-    for (const directory of await listDirectories(absoluteRoot, options)) dirs.add(directory);
+    for (const directory of await listDirectories(absoluteRoot, options)) {
+      dirs.add(toPosix(path.join(root, directory)));
+    }
   }
   return { files, dirs, scanned };
 }
@@ -176,12 +178,13 @@ export async function buildIndex(rootAbs, roots, options = {}) {
  * Every file under a root, as POSIX paths relative to the repository root.
  *
  * @param {string} rootAbs
- * @param {string} relativeRoot
+ * @param {string} relativeRoot repository-relative directory to walk, e.g. 'src'
  * @param {{ ignores?: string[] }} [options]
- * @returns {Promise<string[]>}
+ * @returns {Promise<string[]>} POSIX paths relative to the repository root
  */
 export async function walkRoot(rootAbs, relativeRoot, options = {}) {
   const absoluteRoot = path.join(rootAbs, relativeRoot);
   if (!(await isDirectory(absoluteRoot))) return [];
-  return walkFiles(absoluteRoot, options);
+  const walked = await walkFiles(absoluteRoot, options);
+  return walked.map((file) => toPosix(path.join(relativeRoot, file)));
 }

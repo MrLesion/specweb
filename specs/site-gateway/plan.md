@@ -51,3 +51,14 @@ Entry flattening breaks old relative paths (task 1 verifies first). Shared
 card ossification (contract keeps required triple, extras ignored). Sticky
 header overlap (`scroll-margin-top`, verified at 320px/200%). Stub drift
 (stubs pass through the endpoint validator).
+
+## Contract delta
+
+- **Applied 2026-10-04 by the Architect**, justified in
+  `.specweb/decisions/ADR-0002-declare-site-gateway-route-table.md`:
+  `.specweb/standards/route-contract.yaml` `routes:` before → after —
+  `[]` → five declarations (`gateway`, `music`, `games`, `projects`,
+  `not-found`) matching `contracts/route-contract-delta.md` verbatim;
+  `metadata.updated` bumped to 2026-10-04. No rule, severity or `enabled`
+  flag changed. Evidence: `node .specweb/tools/validate-routes.mjs` →
+  `5 declared route(s); 0 errors, 0 warnings; PASS`.
