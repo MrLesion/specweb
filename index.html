@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Gateway</title>
+  <meta name="description" content="Gateway into music, games and projects.">
+  <link rel="stylesheet" href="./src/styles/main.css">
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('app.ui.theme');
+        var theme = stored === 'dark' || stored === 'light' ? stored : null;
+        if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          theme = 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', theme || 'light');
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header>
+    <app-site-header></app-site-header>
+  </header>
+  <main id="outlet" tabindex="-1">
+    <section aria-labelledby="gateway-heading">
+      <h1 id="gateway-heading">Welcome</h1>
+      <p>Pick a door.</p>
+      <ul>
+        <li>
+          <app-gateway-card title="Music" blurb="Listen to tracks." href="/music"></app-gateway-card>
+        </li>
+        <li>
+          <app-gateway-card title="Games" blurb="Play games." href="/games"></app-gateway-card>
+        </li>
+        <li>
+          <app-gateway-card title="Projects" blurb="Browse projects." href="/projects"></app-gateway-card>
+        </li>
+      </ul>
+    </section>
+    <section aria-labelledby="music-heading">
+      <h1 id="music-heading">Music</h1>
+      <p id="music-status" role="status">Loading music.</p>
+      <ul id="music-list"></ul>
+    </section>
+    <section aria-labelledby="games-heading">
+      <h1 id="games-heading">Games</h1>
+      <p id="games-status" role="status">Loading games.</p>
+      <ul id="games-list"></ul>
+    </section>
+    <section aria-labelledby="projects-heading">
+      <h1 id="projects-heading">Projects</h1>
+      <p id="projects-status" role="status">Loading projects.</p>
+      <ul id="projects-list"></ul>
+    </section>
+  </main>
+  <footer>
+    <p>Site gateway.</p>
+  </footer>
+  <div id="app-status" role="status" aria-live="polite"></div>
+  <script type="module" src="./src/main.js" fetchpriority="high"></script>
+</body>
+</html>
