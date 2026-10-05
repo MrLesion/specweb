@@ -5,5 +5,5 @@
 .github/
 .vscode/
 
-openspec/
-!openspec/config.yaml
+node_modules/
+dist/

@@ -67,7 +67,6 @@ commit as the record.
 | ADR | Title | Status | Date |
 | --- | --- | --- | --- |
 | ADR-0001 | Validator helpers return repository-relative paths | proposed | 2026-10-04 |
-| ADR-0002 | Declare the site-gateway route table in route-contract.yaml | proposed | 2026-10-04 |
 | ADR-0003 | @web/test-runner as the browser test environment | proposed | 2026-10-04 |
 | ADR-0004 | Relative import specifiers are ./- and ../-prefixed | proposed | 2026-10-04 |
 
